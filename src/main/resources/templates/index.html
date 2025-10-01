@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pokemon Category Checker</title>
+    <script>
+        async function loadCategories() {
+            const res = await fetch('/categories');
+            const categories = await res.json();
+
+            const selects = [document.getElementById("category1"), document.getElementById("category2")];
+            selects.forEach(select => {
+                const placeholder = document.createElement("option");
+                placeholder.value = "";
+                placeholder.textContent = "-- Select Category --";
+                placeholder.disabled = true;
+                placeholder.selected = true;
+                select.appendChild(placeholder);
+
+                categories.forEach(cat => {
+                    const option = document.createElement("option");
+                    option.value = cat;
+                    option.textContent = cat;
+                    select.appendChild(option);
+                });
+                select.selectId = 0;
+            });
+        }
+
+        async function loadOptions(selectId, categorySelectId) {
+            const category = document.getElementById(categorySelectId).value;
+            const res = await fetch(`/category/options?category=${category}`);
+            const options = await res.json();
+
+            const select = document.getElementById(selectId);
+            select.innerHTML = "";
+            options.forEach(opt => {
+                const option = document.createElement("option");
+                option.value = opt;
+                option.textContent = opt;
+                select.appendChild(option);
+            });
+        }
+
+        async function filterPokemon() {
+            const category1 = document.getElementById("category1").value;
+            const value1 = document.getElementById("value1").value;
+            const category2 = document.getElementById("category2").value;
+            const value2 = document.getElementById("value2").value;
+
+            const res = await fetch(`/pokemon/filter?category1=${category1}&value1=${value1}&category2=${category2}&value2=${value2}`);
+            const pokemons = await res.json();
+
+            const list = document.getElementById("results");
+            list.innerHTML = "";
+            pokemons.forEach(p => {
+                const li = document.createElement("li");
+                li.textContent = p;
+                list.appendChild(li);
+            });
+        }
+
+        window.onload = loadCategories;
+    </script>
+    <style>
+        body {
+            background-color: #121212;
+            color: #E0E0E0;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        select, button {
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #333;
+            font-size: 14px;
+        }
+
+        select {
+            padding: 4px 1px 4px 1px;
+            background-color: #1E1E1E;
+            color: #E0E0E0;
+        }        
+
+        button {
+            padding: 7px;
+            background-color: #1b2b44;
+            color: #E0E0E0;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #102144;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #1E1E1E;
+            margin: 4px 0;
+            padding: 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokemon Category Checker</h1>
+
+    <div>
+        <label for="category1">Category 1:</label>
+        <select id="category1" onchange="loadOptions('value1', 'category1')"></select>
+
+        <label for="value1">Value 1:</label>
+        <select id="value1"></select>
+    </div>
+
+    <div>
+        <label for="category2">Category 2:</label>
+        <select id="category2" onchange="loadOptions('value2', 'category2')"></select>
+
+        <label for="value2">Value 2:</label>
+        <select id="value2"></select>
+    </div>
+
+    <button onclick="filterPokemon()">Find Pokemon</button>
+
+    <h2>Results</h2>
+    <ul id="results"></ul>
+</body>
+</html>
