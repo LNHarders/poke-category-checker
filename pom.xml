@@ -13,19 +13,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>poke-category-checker</name>
 	<description>Tool to get all Pokemons of 2 categories</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
+	<url>https://github.com/LNHarders/poke-category-checker</url>
 	<developers>
-		<developer/>
+		<developer>
+			<id>LNHarders</id>
+			<name>Laurin Harders</name>
+		</developer>
 	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 	<properties>
 		<java.version>21</java.version>
 	</properties>

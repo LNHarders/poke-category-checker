@@ -1,4 +1,4 @@
-package io.github.lnharders.poke_category_checker.config;
+package io.github.lnharders.poke_category_checker.logging;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

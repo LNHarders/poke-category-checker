@@ -6,8 +6,8 @@ A small Spring Boot project that queries the [PokéAPI](https://pokeapi.co/) and
 
 ## Features
 
-- Fetch Pokémon data from PokéAPI using [pokeapi-reactor](https://github.com/skaro-pokeapi/pokeapi-reactor)
-- Filter Pokémon by **two categories** (type, ability, move, etc.)
+- Fetch Pokémon data from PokéAPI using [pokeapi-reactor](https://github.com/SirSkaro/pokeapi-reactor)
+- Filter Pokémon by **two categories** (currently only type and ability are implemented)
 
 ---
 
@@ -70,7 +70,16 @@ Access the UI at: `http://localhost:8080/`
 
 ## Dependencies
 
-This project uses [pokeapi-reactor](https://github.com/skaro-pokeapi/pokeapi-reactor) to query the PokéAPI.
+This project uses [pokeapi-reactor](https://github.com/SirSkaro/pokeapi-reactor) to query the PokéAPI.
 
 **Important:**  
 `pokeapi-reactor` is not published to Maven Central, so it must be installed locally before building the project
+
+```bash
+# Clone pokeapi-reactor locally
+git clone https://github.com/SirSkaro/pokeapi-reactor.git
+cd pokeapi-reactor
+
+# Build and install locally to your Maven repository
+./mvnw clean install
+```

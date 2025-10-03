@@ -3,7 +3,6 @@ package io.github.lnharders.poke_category_checker.service;
 import org.springframework.stereotype.Service;
 import io.github.lnharders.poke_category_checker.model.CategoryType;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class PokeApiService implements PokemonService {
             case ability:
                 return getAllPokemonWithAbility(value);
             default:
-                return Mono.just(Collections.emptyList());
+                return Mono.error(new UnsupportedOperationException("Unsupported category type: " + categoryType));
         }
     }
 
@@ -63,7 +62,7 @@ public class PokeApiService implements PokemonService {
             case ability:
                 return getAbilityOptions();        
             default:
-                return Mono.just(Collections.emptyList());
+                return Mono.error(new UnsupportedOperationException("Unsupported category type: " + categoryType));
         }
     }
 
