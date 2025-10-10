@@ -44,12 +44,12 @@ The application runs on `http://localhost:8080/`.
 | Endpoint | Description |
 |----------|-------------|
 | `GET /categories` | Returns available category types |
-| `GET /category/options?category=TYPE` | Returns possible values for the given category |
-| `GET /pokemon/filter?category1=TYPE&value1=X&category2=TYPE&value2=Y` | Returns a list of Pokémon matching both category-value filters |
+| `GET /category/options?category=type` | Returns possible values for the given category |
+| `GET /pokemon/filter?category1=type&value1=electric&category2=type&value2=flying` | Returns a list of Pokémon matching both category-value filters |
 
 ### Example Query
 
-    GET /pokemon/filter?category1=TYPE&value1=flying&category2=ABILITY&value2=static
+    GET /pokemon/filter?category1=type&value1=flying&category2=ability&value2=static
 
 Response:
 
