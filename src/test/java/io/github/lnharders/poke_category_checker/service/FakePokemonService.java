@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import io.github.lnharders.poke_category_checker.model.CategoryType;
+import io.github.lnharders.poke_category_checker.service.category.CategoryService;
 import reactor.core.publisher.Mono;
 
-public class FakePokemonService implements PokemonService{
+public class FakePokemonService implements CategoryService {
 
     private final Map<String, List<String>> lists = new HashMap<>();
+    private CategoryType categoryType;
 
-    @Override
-    public Mono<List<String>> getPokemonOfMatchingCategory(CategoryType categoryType, String value) {
-        List<String> result = lists.getOrDefault(value, Collections.emptyList());
-        return Mono.just(result);
+    public void setCategoryType(CategoryType categoryType) {
+        this.categoryType = categoryType;
     }
 
     public void setListForValue(String value, List<String> list) {
@@ -23,7 +23,18 @@ public class FakePokemonService implements PokemonService{
     }
 
     @Override
-    public Mono<List<String>> getCategoryOptions(CategoryType categoryType) {
+    public CategoryType getCategoryType() {
+        return this.categoryType;
+    }
+
+    @Override
+    public Mono<List<String>> getCategoryOptions() {
         return Mono.just(Collections.emptyList());
+    }
+
+    @Override
+    public Mono<List<String>> getPokemonOfValue(String value) {
+        List<String> result = lists.getOrDefault(value, Collections.emptyList());
+        return Mono.just(result);
     }
 }

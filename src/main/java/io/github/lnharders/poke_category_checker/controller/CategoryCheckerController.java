@@ -8,18 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.lnharders.poke_category_checker.logic.CategoryChecker;
 import io.github.lnharders.poke_category_checker.model.CategoryType;
-import io.github.lnharders.poke_category_checker.service.PokeApiService;
 import reactor.core.publisher.Mono;
 
 
 @RestController
 public class CategoryCheckerController {
 
-    private final PokeApiService pokemonService;
     private final CategoryChecker categoryChecker;
 
-    public CategoryCheckerController(PokeApiService pokemonService, CategoryChecker categoryChecker) {
-        this.pokemonService = pokemonService;
+    public CategoryCheckerController(CategoryChecker categoryChecker) {
         this.categoryChecker = categoryChecker;
     }
 
@@ -40,7 +37,6 @@ public class CategoryCheckerController {
 
     @GetMapping("/category/options")
     public Mono<List<String>> getCategoryOptions(@RequestParam CategoryType category) {
-        return pokemonService.getCategoryOptions(category);
-    }
-    
+        return categoryChecker.getCategoryOptions(category);
+    }    
 }

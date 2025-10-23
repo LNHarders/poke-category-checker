@@ -7,21 +7,24 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import io.github.lnharders.poke_category_checker.model.CategoryType;
-import io.github.lnharders.poke_category_checker.service.PokemonService;
+import io.github.lnharders.poke_category_checker.service.category.CategoryService;
+import io.github.lnharders.poke_category_checker.service.category.CategoryServiceRegistry;
 import reactor.core.publisher.Mono;
 
 @Service
 public class CategoryChecker {
 
-    private final PokemonService pokemonService;
+    private final CategoryServiceRegistry categoryServices;
 
-    public CategoryChecker(PokemonService pokemonService) {
-        this.pokemonService = pokemonService;
+    public CategoryChecker(CategoryServiceRegistry categoryServices) {
+        this.categoryServices = categoryServices;
     }
 
     public Mono<List<String>> getPokemonOfTwoCategories(CategoryType categoryType1, String categoryValue1, CategoryType categoryType2, String categoryValue2) {
-        Mono<List<String>> categoryOneMatches = pokemonService.getPokemonOfMatchingCategory(categoryType1, categoryValue1);
-        Mono<List<String>> categoryTwoMatches = pokemonService.getPokemonOfMatchingCategory(categoryType2, categoryValue2);
+        CategoryService categoryOne = categoryServices.getService(categoryType1);
+        CategoryService categoryTwo = categoryServices.getService(categoryType2);
+        Mono<List<String>> categoryOneMatches = categoryOne.getPokemonOfValue(categoryValue1);
+        Mono<List<String>> categoryTwoMatches = categoryTwo.getPokemonOfValue(categoryValue2);
 
         return Mono.zip(categoryOneMatches, categoryTwoMatches)
         .map(tuple -> {
@@ -30,5 +33,9 @@ public class CategoryChecker {
             list1.retainAll(new HashSet<String>(list2));
             return list1;
         });
+    }
+
+    public Mono<List<String>> getCategoryOptions(CategoryType categoryType) {
+        return categoryServices.getService(categoryType).getCategoryOptions();
     }
 }

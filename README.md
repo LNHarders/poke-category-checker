@@ -7,7 +7,7 @@ A small Spring Boot project that queries the [PokéAPI](https://pokeapi.co/) and
 ## Features
 
 - Fetch Pokémon data from PokéAPI using [pokeapi-reactor](https://github.com/SirSkaro/pokeapi-reactor)
-- Filter Pokémon by **two categories** (currently only type and ability are implemented)
+- Filter Pokémon by **two categories** (currently only type, ability and generation are implemented)
 
 ---
 
